@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="style.css">
+
+<body>
+    
+    <h1>Your Study Planner</h1>
+
+    
+
+    <div class="toprow">
+
+    <div class="task">
+
+        <h3>Upcoming Tasks</h3>
+        <img src="2.png" class="icon">
+
+        <input type="text" class="task-input" placeholder = "Enter a task...">
+        <button
+        onclick="addTask()"
+        >Add Task</button>
+
+        <button
+        class="refresh"
+        onclick="refresh(this)"
+        >Refresh</button>
+
+        <ol class="tasks-list" > </ol>
+    </div>
+
+    <div class="notes">
+        <img src="3.png" class="icon">
+        <h3>Notes</h3>
+        
+        <input class="notes-input" placeholder = "Jot down your thoughts..."></input>
+        <button
+        onclick="addNotes()"
+        >Save Notes</button>
+        <button
+        onclick="refresh(this)"
+        >Refresh</button>
+
+        <ul class="notes-list"></ul>
+
+    </div>
+
+    <div class="accomplished">
+        <img src="5.png" class="icon">
+        <h3>Accomplished so far!</h3>
+        <ul class="completed-list"></ul>
+
+        <button
+        onclick="refresh(this)"
+        >Refresh</button>
+    </div>
+</div>
+
+<div class="bottomrow">
+    <div class="session">
+        <img src="4.png" class="icon">
+        <h3>Set Your Study Session!</h3>
+        
+        <input class="subject-input" placeholder = "Enter the subject"></input>
+        <input class="duration-input" placeholder = "Duration (minutes)"></input>
+        <button onclick="timer()">Start Timer</button>
+        <p class="timer-display"></p>
+
+        <button
+        onclick="refreshTimer()"
+        >Refresh Timer</button>
+    </div>
+</div>
+    </div>
+    </div>
+
+
+    <script>
+        function addTask() {
+            const inputElement = document.querySelector('.task-input');
+            const taskInput = inputElement.value;
+            const newToDo = document.createElement('li');
+            const taskList = document.querySelector('.tasks-list');
+            newToDo.textContent = taskInput;
+            taskList.appendChild(newToDo);
+            inputElement.value = "";
+
+            newToDo.addEventListener('click', function () {
+                newToDo.style.textDecoration = "line-through";
+                document.querySelector('.completed-list').appendChild(newToDo);
+
+            })
+            
+            
+
+
+        }
+
+        function refresh(button) { 
+            const section = button.parentElement;
+            const lists = section.querySelectorAll('ol, ul');
+            lists.forEach(function(list) {
+                 list.innerHTML = "";
+                });
+
+        }
+
+        function addNotes() {
+            const inputElement = document.querySelector('.notes-input');
+            const taskInput = inputElement.value;
+            const newToDo = document.createElement('li');
+            const taskList = document.querySelector('.notes-list');
+            newToDo.textContent = taskInput;
+            taskList.appendChild(newToDo);
+            inputElement.value = "";
+
+         
+        }
+    let timeLeft;
+    let countdown
+        function timer() {
+            const duration = Number(
+                document.querySelector('.duration-input').value
+            );
+
+             timeLeft = duration * 60;
+            
+             countdown = setInterval(function(){
+
+                const min = Math.floor(timeLeft / 60);
+                const sec = timeLeft % 60;
+
+                document.querySelector('.timer-display').textContent = 
+                min + ":" + sec;
+                timeLeft--;
+
+                if(timeLeft <= 0){
+                    clearInterval(countdown);
+                }
+            }, 1000)
+
+        }
+
+        function refreshTimer(){
+            clearInterval(countdown);
+            timeLeft = 0;
+            document.querySelector('.timer-display').textContent = "0:00";
+            document.querySelector('.duration-input').value = "";
+            document.querySelector('.subject-input').value = "";
+        }
+
+        
+
+
+    </script>
+</body>
