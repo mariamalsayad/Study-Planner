@@ -59,14 +59,7 @@ input{
 }
 
 
-.icon{
-    position: absolute;
-    top: -40px; /* Moves the image higher */
-    right: -10px; 
-    width: 90px; /* Make it bigger */
-    height: auto; /* Maintain aspect ratio */
-    z-index: 10; 
-}
+
 
 h1{
         font-style: italic;
